@@ -99,7 +99,6 @@ class USART {
                 ncopy /= 10;
                 size++;
             }
-            const int sz = size;
             ncopy = number;
             for(int i=0;ncopy;i++) {
                 output[size - 1 - i] = ncopy % 10 + '0';
