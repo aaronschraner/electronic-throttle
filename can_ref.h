@@ -1,0 +1,35 @@
+#ifndef CAN_REF_H
+#define CAN_REF_H
+
+enum CAN_INSTRUCTION: uint8_t {
+    INSTR_RESET = 0xC0,
+    INSTR_READ = 0x03,
+    INSTR_READ_RX = 0x90, //0b1001 0nm0
+    INSTR_WRITE = 0x02,
+    INSTR_LOAD_TX = 0x40,
+    INSTR_RTS = 0x80,
+    INSTR_READ_STATUS = 0xA0,
+    INSTR_RX_STATUS = 0xB0,
+    INSTR_BIT_MODIFY = 0x05
+};
+
+enum CAN_REG: uint8_t {
+    REG_BFPCTRL = 0x0C,
+    REG_TXRTSCTRL = 0x0D,
+    REG_CANCTRL = 0x0F,
+    REG_CONF3  = 0x28,
+    REG_CONF2 = 0x29,
+    REG_CONF1 = 0x2A,
+    REG_CANINTE = 0x2B,
+    REG_CANINTF = 0x2C,
+    REG_TXB0CTRL = 0x30,
+    REG_TXB0SIDH = 0x31,
+    REG_TXB0SIDL = 0x32,
+    REG_TXB0EID8 = 0x33,
+    REG_TXB0EID0 = 0x34,
+    REG_TXB0DLC = 0x35,
+    REG_TXB0D0 = 0x36
+};
+    
+
+#endif

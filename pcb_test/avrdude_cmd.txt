@@ -1,0 +1,1 @@
+sudo avrdude -p atmega2560 -c wiring -P /dev/ttyACM1 -D -Uflash:w:OLED_Arduino_test.ino.hex:i
