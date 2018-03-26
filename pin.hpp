@@ -1,6 +1,12 @@
 #ifndef PIN_H
 #define PIN_H
 
+#include <avr/io.h> // _BV
+
+#include <stdint.h>
+
+#include "register.hpp"
+
 enum Direction {
     INPUT,
     OUTPUT
@@ -12,21 +18,24 @@ enum PinValue: bool {
 };
 
 struct Pin {
-
-    volatile uint8_t & port ;
+    reg8_t port;
     uint8_t pin;
 
-    Pin(volatile uint8_t& port, uint8_t pin, Direction d = INPUT):
+    Pin(reg8_t port, uint8_t pin, Direction d = INPUT) :
         port(port), pin(pin)
     {
         mode(d);
         set(0);
     }
-    void mode(Direction d) const {
-        ddr_reg() = (d == OUTPUT) ? ddr_reg() | _BV(pin) : ddr_reg() & ~_BV(pin);
+
+    void mode(Direction const d) {
+        if (d == OUTPUT)
+            ddr_reg() |= _BV(pin);
+        else
+            ddr_reg() &= ~_BV(pin);
     }
 
-    void set(bool value) const {
+    void set(bool const value) {
         port = value ? 
             port | _BV(pin) :
             port &~_BV(pin);
@@ -36,21 +45,23 @@ struct Pin {
         return pin_reg() & _BV(pin);
     }
 
-    volatile uint8_t& port_reg() const {
+    reg8_t port_reg() const {
         return port;
     }
 
-    volatile uint8_t& ddr_reg() const {
+    reg8_t ddr_reg() const {
         return *(&port + (&DDRB - &PORTB));
     }
 
-    volatile uint8_t& pin_reg() const {
+    reg8_t pin_reg() const {
         return *(&port + (&PINB - &PORTB));
     }
-    const Pin& operator=(bool value) const {
+
+    Pin const & operator=(bool const value) {
         set(value);
         return *this;
     }
+
     operator bool() const {
         return get();
     }

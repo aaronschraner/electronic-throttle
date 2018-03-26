@@ -1,7 +1,7 @@
 #ifndef CAN_REF_H
 #define CAN_REF_H
 
-enum CAN_INSTRUCTION: uint8_t {
+enum CAN_INSTRUCTION : uint8_t {
     INSTR_RESET = 0xC0,
     INSTR_READ = 0x03,
     INSTR_READ_RX = 0x90, //0b1001 0nm0
@@ -13,7 +13,7 @@ enum CAN_INSTRUCTION: uint8_t {
     INSTR_BIT_MODIFY = 0x05
 };
 
-enum CAN_REG: uint8_t {
+enum CAN_REG : uint8_t {
     REG_BFPCTRL = 0x0C,
     REG_TXRTSCTRL = 0x0D,
     REG_CANCTRL = 0x0F,
