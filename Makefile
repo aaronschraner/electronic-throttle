@@ -8,8 +8,8 @@ CPPFILES=main.cpp spi.cpp
 CC=avr-g++
 HFILES=spi.h pin.h
 CFLAGS=-g -Os -std=c++11 -Wall -Wno-reorder -mcall-prologues -mmcu=$(MCU) -DF_CPU=$(CPU_FREQ)
-# PROGRAMMER=usbtiny
-PROGRAMMER=wiring
+ PROGRAMMER=usbtiny
+#PROGRAMMER=wiring
 PORT=/dev/ttyACM1
 TARGET=mega_rgb
 
@@ -36,7 +36,8 @@ upload: build
 
 fuse:
 	sudo $(AVRDUDE) -p $(AVRDUDEMCU) -c $(PROGRAMMER) \
-		-P $(PORT) -D -U lfuse:w:$(LFUSE):m -U hfuse:w:$(HFUSE):m -U efuse:w:$(EFUSE):m
+		-D -U lfuse:w:$(LFUSE):m -U hfuse:w:$(HFUSE):m -U efuse:w:$(EFUSE):m
+		#-P $(PORT) -D -U lfuse:w:$(LFUSE):m -U hfuse:w:$(HFUSE):m -U efuse:w:$(EFUSE):m
 
 
 clean:
