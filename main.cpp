@@ -1,19 +1,18 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
-#include "pin.h"
-#include "usart.h"
-#include "pos_sensor.h"
-#include "servo.h"
+#include "pin.hpp"
+#include "usart.hpp"
+#include "pos_sensor.hpp"
+#include "servo.hpp"
 
+uint16_t const
+    ADMUX_APPS1{_BV(REFS0) | 0x00}, // ADC0, single ended, 5V ref
+    ADMUX_APPS2{_BV(REFS0) | 0x02}, // ADC2, single ended, 5V ref
+    ADMUX_TPS1 {(_BV(MUX5) << 8) | _BV(REFS0) | 0x04}, // ADC0, single ended, 5V ref
+    ADMUX_TPS2 {(_BV(MUX5) << 8) | _BV(REFS0) | 0x06}; // ADC2, single ended, 5V ref
 
-
-const uint16_t ADMUX_APPS1 = _BV(REFS0) | 0x00; // ADC0, single ended, 5V ref
-const uint16_t ADMUX_APPS2 = _BV(REFS0) | 0x02; // ADC2, single ended, 5V ref
-const uint16_t ADMUX_TPS1 = (_BV(MUX5) << 8) | _BV(REFS0) | 0x04; // ADC0, single ended, 5V ref
-const uint16_t ADMUX_TPS2 = (_BV(MUX5) << 8) | _BV(REFS0) | 0x06; // ADC2, single ended, 5V ref
-
-int read_channel(uint16_t admux) {
+int16_t read_channel(uint16_t const admux) {
     ADCSRA = 0;
     ADMUX = admux & 0xFF;
     ADCSRB = admux >> 8;
@@ -34,6 +33,7 @@ void pullup_all_pins() {
     PORTH = 0xFF;
     PORTK = 0xFF;
 }
+
 int main() {
 
     pullup_all_pins();
@@ -50,10 +50,11 @@ int main() {
     {
 
         {
-            int ADC_APPS1 = read_channel(ADMUX_APPS1);
-            int ADC_APPS2 = read_channel(ADMUX_APPS2);
-            int ADC_TPS1  = read_channel(ADMUX_TPS1);
-            int ADC_TPS2  = read_channel(ADMUX_TPS2);
+            int16_t const
+                ADC_APPS1{read_channel(ADMUX_APPS1)},
+                ADC_APPS2{read_channel(ADMUX_APPS2)},
+                ADC_TPS1 {read_channel(ADMUX_TPS1 )},
+                ADC_TPS2 {read_channel(ADMUX_TPS2 )};
 
             debug_usart.print("APPS1: ");
             debug_usart.print(ADC_APPS1);

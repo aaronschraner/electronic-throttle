@@ -1,6 +1,8 @@
 #ifndef CAN_H
 #define CAN_H
-#include "can_ref.h"
+#include "can_ref.hpp"
+
+#include <pin.hpp>
 
 struct PinHolder {
     Pin cs;
@@ -17,7 +19,7 @@ class CAN {
         Pin cs_pin;
 
     public:
-        CAN(const Pin& cs_pin):
+        CAN(Pin const & cs_pin):
             cs_pin(cs_pin) {
             cs_pin.mode(OUTPUT);
         }

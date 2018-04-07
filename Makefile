@@ -4,9 +4,9 @@ AVRDUDEMCU=$(MCU)
 OBJ2HEX=avr-objcopy
 AVRDUDE=avrdude
 
-CPPFILES=main.cpp spi.cpp
+CPPFILES=$(wildcard *.cpp)
 CC=avr-g++
-HFILES=spi.h pin.h
+HFILES=$(wildcard *.hpp)
 CFLAGS=-g -Os -std=c++11 -Wall -Wno-reorder -mcall-prologues -mmcu=$(MCU) -DF_CPU=$(CPU_FREQ)
  PROGRAMMER=usbtiny
 #PROGRAMMER=wiring

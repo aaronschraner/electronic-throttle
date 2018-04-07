@@ -1,25 +1,24 @@
-#include "spi.h"
+#include "spi.hpp"
+#include "pin.hpp"
+
 #include <avr/io.h>
-#include "pin.h"
 #include <util/delay.h>
 
 //TODO: implement SPI functions
 
-void spi_init()
-{
-    const Pin 
-        SCK(PORTB,  1, OUTPUT),
+void spi_init() {
+    Pin 
+        SCK (PORTB, 1, OUTPUT),
         MOSI(PORTB, 2, OUTPUT),
-        MISO(PORTB, 3, INPUT),
-        _SS(PORTB,  0, OUTPUT); // if _SS is not configured as an output, SPI does not work
+        MISO(PORTB, 3, INPUT ),
+        _SS (PORTB, 0, OUTPUT); // if _SS is not configured as an output, SPI does not work
     _SS = 1;
 
 	//enable the SPI module
 	SPCR = _BV(SPE) | _BV(MSTR) | _BV(SPI2X);
 }
 
-uint8_t spi_send(uint8_t data)
-{
+uint8_t spi_send(uint8_t data) {
     //const Pin 
     //    SCK(PORTB,  1, OUTPUT),
     //    MOSI(PORTB, 2, OUTPUT),
